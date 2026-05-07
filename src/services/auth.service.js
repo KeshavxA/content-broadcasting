@@ -3,6 +3,8 @@
  * Simulates backend authentication with hardcoded responses.
  */
 
+import Cookies from 'js-cookie';
+
 const MOCK_USERS = {
   TEACHER: {
     id: 'usr_teacher_01',
@@ -62,10 +64,9 @@ export const logoutUser = async () => {
 };
 
 /**
- * Get current user from local storage
+ * Get current user from cookies
  */
 export const getStoredUser = () => {
-  if (typeof window === 'undefined') return null;
-  const user = localStorage.getItem('user');
+  const user = Cookies.get('user');
   return user ? JSON.parse(user) : null;
 };

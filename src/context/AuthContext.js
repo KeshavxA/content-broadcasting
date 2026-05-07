@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
 
@@ -12,9 +13,9 @@ export const AuthProvider = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
+    // Check if user is logged in on initial load
+    const storedToken = Cookies.get('token');
+    const storedUser = Cookies.get('user');
 
     if (storedToken && storedUser) {
       setToken(storedToken);
@@ -26,23 +27,17 @@ export const AuthProvider = ({ children }) => {
   const login = async (userData, authToken) => {
     setUser(userData);
     setToken(authToken);
-    localStorage.setItem('token', authToken);
-    localStorage.setItem('user', JSON.stringify(userData));
-
-    if (userData.role === 'teacher') {
-      router.push('/teacher');
-    } else if (userData.role === 'principal') {
-      router.push('/principal');
-    } else {
-      router.push('/');
-    }
+    
+    // Save to cookies with 7 day expiry
+    Cookies.set('token', authToken, { expires: 7 });
+    Cookies.set('user', JSON.stringify(userData), { expires: 7 });
   };
 
   const logout = () => {
     setUser(null);
     setToken(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    Cookies.remove('token');
+    Cookies.remove('user');
     router.push('/login');
   };
 
