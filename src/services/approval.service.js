@@ -1,5 +1,5 @@
 
-const MOCK_PENDING_REQUESTS = [
+const MOCK_PENDING = [
   {
     id: 'cnt_02',
     title: 'Linear Algebra Review',
@@ -11,54 +11,44 @@ const MOCK_PENDING_REQUESTS = [
   }
 ];
 
-export const getPendingApprovals = async () => {
+export const getPending = async () => {
   await new Promise(resolve => setTimeout(resolve, 700));
-  return MOCK_PENDING_REQUESTS;
+  return MOCK_PENDING;
 };
 
 /**
  * Approve a content request
- * @param {string} contentId 
- * @param {string} feedback Optional feedback from principal
+ * @param {string} id - Content ID 
  */
-export const approveContent = async (contentId, feedback = '') => {
+export const approve = async (id) => {
   await new Promise(resolve => setTimeout(resolve, 800));
-  const request = MOCK_PENDING_REQUESTS.find(r => r.id === contentId);
-  if (request) {
-    request.status = 'approved';
-    request.feedback = feedback;
-
-    return { success: true, message: 'Content approved successfully' };
+  const index = MOCK_PENDING.findIndex(r => r.id === id);
+  if (index !== -1) {
+    const approvedItem = MOCK_PENDING.splice(index, 1)[0];
+    return {
+      success: true,
+      message: 'Content approved successfully',
+      item: { ...approvedItem, status: 'approved' }
+    };
   }
   throw new Error('Request not found');
 };
 
 /**
  * Reject a content request
- * @param {string} contentId 
- * @param {string} reason Reason for rejection
+ * @param {string} id - Content ID
+ * @param {string} reason - Reason for rejection
  */
-export const rejectContent = async (contentId, reason) => {
+export const reject = async (id, reason) => {
   await new Promise(resolve => setTimeout(resolve, 800));
-  const request = MOCK_PENDING_REQUESTS.find(r => r.id === contentId);
-  if (request) {
-    request.status = 'rejected';
-    request.rejectionReason = reason;
-    return { success: true, message: 'Content rejected' };
+  const index = MOCK_PENDING.findIndex(r => r.id === id);
+  if (index !== -1) {
+    const rejectedItem = MOCK_PENDING.splice(index, 1)[0];
+    return {
+      success: true,
+      message: 'Content rejected',
+      item: { ...rejectedItem, status: 'rejected', reason }
+    };
   }
   throw new Error('Request not found');
-};
-
-
-export const getApprovalHistory = async () => {
-  await new Promise(resolve => setTimeout(resolve, 600));
-  return [
-    {
-      id: 'cnt_01',
-      title: 'Advanced Calculus - Week 4',
-      teacherName: 'Prof. Alexander Wright',
-      status: 'approved',
-      processedAt: '2024-05-01T11:00:00Z'
-    }
-  ];
 };

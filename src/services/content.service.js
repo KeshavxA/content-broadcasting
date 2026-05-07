@@ -1,5 +1,4 @@
 
-
 const MOCK_CONTENT = [
   {
     id: 'cnt_01',
@@ -8,7 +7,8 @@ const MOCK_CONTENT = [
     status: 'approved',
     createdAt: '2024-05-01T10:00:00Z',
     isLive: false,
-    teacherId: 'usr_teacher_01'
+    teacherId: 'usr_teacher_01',
+    teacherName: 'Prof. Alexander Wright'
   },
   {
     id: 'cnt_02',
@@ -17,60 +17,47 @@ const MOCK_CONTENT = [
     status: 'pending',
     createdAt: '2024-05-05T14:30:00Z',
     isLive: false,
-    teacherId: 'usr_teacher_01'
+    teacherId: 'usr_teacher_01',
+    teacherName: 'Prof. Alexander Wright'
+  },
+  {
+    id: 'cnt_03',
+    title: 'Organic Chemistry II',
+    description: 'Special session on reaction mechanisms.',
+    status: 'approved',
+    createdAt: '2024-05-06T09:15:00Z',
+    isLive: true,
+    teacherId: 'usr_teacher_02',
+    teacherName: 'Dr. Emily Brooks'
   }
 ];
 
-export const getMyContent = async () => {
-  await new Promise(resolve => setTimeout(resolve, 600));
-  return MOCK_CONTENT;
-};
-
-/**
- * Create new content for broadcasting
- * @param {object} contentData { title, description }
- */
-export const createContent = async (contentData) => {
+export const upload = async (contentData) => {
   await new Promise(resolve => setTimeout(resolve, 800));
   const newContent = {
-    id: `cnt_0${MOCK_CONTENT.length + 1}`,
+    id: `cnt_${Math.random().toString(36).substr(2, 9)}`,
     ...contentData,
     status: 'pending',
     createdAt: new Date().toISOString(),
     isLive: false,
-    teacherId: 'usr_teacher_01'
+    teacherId: 'usr_teacher_01',
+    teacherName: 'Prof. Alexander Wright'
   };
   MOCK_CONTENT.push(newContent);
   return newContent;
 };
 
-/**
- * Start broadcasting live
- * @param {string} contentId 
- */
-export const startLiveBroadcast = async (contentId) => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  const content = MOCK_CONTENT.find(c => c.id === contentId);
-  if (content) {
-    if (content.status !== 'approved') {
-      throw new Error('Content must be approved before broadcasting live.');
-    }
-    content.isLive = true;
-    return content;
-  }
-  throw new Error('Content not found');
+export const getMyContent = async () => {
+  await new Promise(resolve => setTimeout(resolve, 600));
+  return MOCK_CONTENT.filter(c => c.teacherId === 'usr_teacher_01');
 };
 
-/**
- * Stop live broadcast
- * @param {string} contentId 
- */
-export const stopLiveBroadcast = async (contentId) => {
+export const getAll = async () => {
+  await new Promise(resolve => setTimeout(resolve, 700));
+  return MOCK_CONTENT;
+};
+
+export const getActive = async () => {
   await new Promise(resolve => setTimeout(resolve, 500));
-  const content = MOCK_CONTENT.find(c => c.id === contentId);
-  if (content) {
-    content.isLive = false;
-    return content;
-  }
-  throw new Error('Content not found');
+  return MOCK_CONTENT.filter(c => c.isLive === true);
 };
