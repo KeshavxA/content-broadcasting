@@ -1,5 +1,7 @@
 # Content Broadcasting System
 
+[![Live Demo](https://img.shields.io/badge/demo-live-emerald?style=for-the-badge)](https://content-broadcasting-sooty.vercel.app/)
+
 A premium, production-ready content broadcasting platform built with Next.js 16 (App Router), featuring robust authentication, role-based access control, and a scalable service architecture.
 
 ## 🚀 Key Features
