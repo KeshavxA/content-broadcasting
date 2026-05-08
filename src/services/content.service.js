@@ -32,6 +32,31 @@ const MOCK_CONTENT = [
   }
 ];
 
+const generateMockData = () => {
+  const data = [...MOCK_CONTENT];
+  const statuses = ['approved', 'pending', 'rejected'];
+  const subjects = ["Mathematics", "Physics", "Chemistry", "Biology", "History", "Geography", "English", "Computer Science"];
+
+  for (let i = 1; i <= 500; i++) {
+    data.push({
+      id: `cnt_gen_${i}`,
+      title: `Generated Lesson #${i} - ${subjects[i % subjects.length]}`,
+      description: `This is an automated mock description for lesson number ${i}. It covers various topics in ${subjects[i % subjects.length]}.`,
+      status: statuses[i % statuses.length],
+      createdAt: new Date(Date.now() - i * 3600000).toISOString(),
+      isLive: i % 20 === 0,
+      teacherId: `usr_teacher_${i % 10}`,
+      teacherName: `Teacher ${i % 10 + 1}`,
+      subject: subjects[i % subjects.length],
+      startTime: new Date(Date.now() + i * 3600000).toISOString(),
+      endTime: new Date(Date.now() + (i + 1) * 3600000).toISOString(),
+    });
+  }
+  return data;
+};
+
+const LARGE_MOCK_DATA = generateMockData();
+
 export const upload = async (contentData) => {
   await new Promise(resolve => setTimeout(resolve, 800));
   const newContent = {
@@ -43,18 +68,18 @@ export const upload = async (contentData) => {
     teacherId: 'usr_teacher_01',
     teacherName: 'Prof. Alexander Wright'
   };
-  MOCK_CONTENT.push(newContent);
+  LARGE_MOCK_DATA.push(newContent);
   return newContent;
 };
 
 export const getMyContent = async () => {
   await new Promise(resolve => setTimeout(resolve, 600));
-  return MOCK_CONTENT.filter(c => c.teacherId === 'usr_teacher_01');
+  return LARGE_MOCK_DATA.filter(c => c.teacherId === 'usr_teacher_01');
 };
 
 export const getAll = async () => {
   await new Promise(resolve => setTimeout(resolve, 700));
-  return MOCK_CONTENT;
+  return LARGE_MOCK_DATA;
 };
 
 export const getActive = async () => {
