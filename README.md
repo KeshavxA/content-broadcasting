@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Content Broadcasting System
 
-## Getting Started
+A premium, production-ready content broadcasting platform built with Next.js 16 (App Router), featuring robust authentication, role-based access control, and a scalable service architecture.
 
-First, run the development server:
+## 🚀 Key Features
 
+- **Role-Based Dashboards**: Tailored experiences for Teachers (Content Management) and Principals (Moderation).
+- **Secure Authentication**: Cookie-based session management with JWT simulation.
+- **Broadcast Moderation**: Full approval workflow with mandatory rejection feedback.
+- **Public Live Pages**: Unauthenticated access to active broadcasts with real-time polling.
+- **Performance Optimized**: Handles large datasets (500+ items) with smart pagination and filtering.
+- **Premium UI/UX**: Built with Tailwind CSS, Lucide icons, and Sonner notifications.
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Styling**: Tailwind CSS
+- **Forms**: React Hook Form + Zod
+- **API**: Axios with Request/Response Interceptors
+- **State**: React Context API
+- **Persistence**: js-cookie
+- **Notifications**: Sonner
+
+## 🏁 Getting Started
+
+### Prerequisites
+- Node.js 18.x or higher
+- npm or yarn
+
+### Installation
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone the repository
+git clone https://github.com/KeshavxA/content-broadcasting.git
+
+# Install dependencies
+npm install
 ```
 
+### Development
+```bash
+# Run the development server
+npm run dev
+```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🔐 Test Credentials
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **Teacher** | `teacher@test.com` | `password` |
+| **Principal** | `principal@test.com` | `password` |
 
-## Learn More
+## 📁 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+Refer to `Frontend-notes.txt` for a detailed explanation of the folder structure and technical architecture.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚢 Deployment (Vercel)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The easiest way to deploy this project is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme):
 
-## Deploy on Vercel
+1. Push your code to GitHub.
+2. Connect your repository to Vercel.
+3. Vercel will automatically detect Next.js and deploy your application.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Built by Keshav Sharmafor Educational Excellence.
