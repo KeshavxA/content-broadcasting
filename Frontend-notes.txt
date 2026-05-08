@@ -1,0 +1,81 @@
+========================================================================
+CONTENT BROADCASTING SYSTEM - FRONTEND DOCUMENTATION
+========================================================================
+
+1. FOLDER STRUCTURE EXPLANATION
+------------------------------------------------------------------------
+The project follows a modular and scalable Next.js App Router structure:
+
+src/
+├── app/            # Next.js App Router pages and layouts
+│   ├── (auth)/     # Authentication pages (Login)
+│   ├── teacher/    # Teacher-specific dashboard and content management
+│   ├── principal/  # Principal-specific moderation and archive views
+│   └── live/       # Public broadcast viewing pages
+├── components/     # UI Component library
+│   ├── ui/         # Shadcn-inspired base components (Button, Card, etc.)
+│   └── shared/     # High-level reusable components (Sidebar, Navbar, Layouts)
+├── context/        # Global React Context (AuthContext)
+├── hooks/          # Custom React hooks (useAuth)
+├── services/       # API abstraction layer (Axios instance + Service modules)
+├── utils/          # Helper functions and shared utilities
+└── middleware.js   # Server-side route protection and RBAC logic
+
+2. AUTHENTICATION FLOW
+------------------------------------------------------------------------
+- Storage: JWT tokens are stored in 'js-cookie' for both client-side 
+  access and server-side middleware validation.
+- Attachment: A centralized Axios instance (services/api.js) uses a 
+  request interceptor to automatically attach the 'Authorization: 
+  Bearer <token>' header to every outgoing API request.
+- Persistence: User profile data is also cached in cookies to ensure 
+  immediate state recovery upon page refresh.
+- Role Redirect: Upon successful login, the 'AuthContext' determines 
+   the user's role and redirects them to their respective dashboard 
+  (/teacher/dashboard or /principal/dashboard).
+
+3. ROLE-BASED ROUTING (RBAC)
+------------------------------------------------------------------------
+- Server-Side Protection: Next.js 'middleware.js' intercepts every 
+  request to /teacher, /principal, and other protected routes.
+- Enforcement: It verifies the presence of an auth token. If missing, 
+  it redirects to /login. If present, it checks the user's role and 
+  prevents Teachers from accessing Principal pages (and vice versa).
+- Public Access: The /live/[teacherId] routes are explicitly excluded 
+  from the protected matcher to allow public viewing without login.
+
+4. API INTEGRATION (SERVICE LAYER PATTERN)
+------------------------------------------------------------------------
+- Logic Abstraction: All API calls are encapsulated within service 
+  modules (auth.service.js, content.service.js, approval.service.js).
+- Clean Components: React components do not make direct API calls; 
+  they interact only with the service layer, keeping UI logic separate 
+  from data-fetching logic.
+- Mocking: Services currently use 'setTimeout' and hardcoded data to 
+  simulate backend behavior, making them easily swappable for real 
+  endpoints in the future.
+
+5. STATE MANAGEMENT
+------------------------------------------------------------------------
+- Global State: React Context (AuthContext) manages the top-level 
+  authentication state (user, loading, isAuthenticated).
+- Local State: Standard 'useState' and 'useMemo' are used within pages 
+  to handle UI-specific states like filtering, searching, pagination, 
+  and modal visibility.
+- Form Management: 'React Hook Form' combined with 'Zod' is used for 
+  complex form state and client-side validation.
+
+6. ASSUMPTIONS & DESIGN CHOICES
+------------------------------------------------------------------------
+- Mock Backend: Assumes a RESTful API structure with standard JSON 
+  responses and HTTP status codes.
+- Token Format: Assumes standard JWT Bearer tokens for authorization.
+- Performance: Pagination is used for large datasets (500+ items) to 
+  ensure smooth browser performance.
+- Resilience: Optional chaining is used throughout the UI to handle 
+  potentially incomplete API responses without crashing.
+- Aesthetic: Modern, high-contrast UI (Tailwind CSS) with explicit 
+  loading (Skeleton) and empty states for a premium feel.
+
+========================================================================
+EOF
