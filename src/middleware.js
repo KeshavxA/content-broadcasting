@@ -15,8 +15,7 @@ export function middleware(request) {
 
   const isProtectedRoute =
     pathname.startsWith('/teacher') ||
-    pathname.startsWith('/principal') ||
-    pathname.startsWith('/live');
+    pathname.startsWith('/principal');
 
   if (isProtectedRoute && !token) {
     return NextResponse.redirect(new URL('/login', request.url));

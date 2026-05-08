@@ -84,5 +84,10 @@ export const getAll = async () => {
 
 export const getActive = async () => {
   await new Promise(resolve => setTimeout(resolve, 500));
-  return MOCK_CONTENT.filter(c => c.isLive === true);
+  return LARGE_MOCK_DATA.filter(c => c.isLive === true);
+};
+
+export const getActiveByTeacher = async (teacherId) => {
+  await new Promise(resolve => setTimeout(resolve, 600));
+  return LARGE_MOCK_DATA.find(c => c.teacherId === teacherId && c.isLive === true);
 };
